@@ -1,0 +1,19 @@
+name: VirtualStorage
+version: '${version}'
+main: strictpvp.virtualStorage.VirtualStorage
+api-version: '1.13'
+authors: [ strict_pvp ]
+
+depend:
+  - LuckPerms
+
+commands:
+  창고:
+    usage: /창고 <창고번호>
+    permission: VirtualStorage.open
+
+permissions:
+  VirtualStorage.open:
+    default: true
+  VirtualStorage.limit:
+    default: true

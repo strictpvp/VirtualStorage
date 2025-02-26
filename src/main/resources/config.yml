@@ -1,0 +1,3 @@
+limit: # group limit (i dont have idea for per user limits, i think its simple method)
+  default: 2 # group name must lowercase even your group name has uppercase
+  vip: 4 # at now 36 is max value in /창고 menu
