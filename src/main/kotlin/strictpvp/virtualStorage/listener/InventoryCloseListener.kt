@@ -1,5 +1,6 @@
 package strictpvp.virtualStorage.listener
 
+import org.bukkit.Sound
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -16,6 +17,8 @@ class InventoryCloseListener : Listener {
     fun onClose(event: InventoryCloseEvent) {
         if (!openPlayerList.contains(event.player))
             return
+
+        (event.player as Player).playSound(event.player.location, Sound.BLOCK_ENDER_CHEST_CLOSE, 1.0f, 1.0f)
 
         val list: MutableMap<Int, ItemStack> = mutableMapOf()
 

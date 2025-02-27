@@ -4,6 +4,7 @@ import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.Material
 import org.bukkit.NamespacedKey
+import org.bukkit.Sound
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -68,10 +69,12 @@ class OpenCommand : CommandExecutor, TabCompleter {
 
         if (number == null || number < 1) {
             sender.sendMessage("올바른 자연수를 입력해주세요")
+            player.playSound(player.location, Sound.BLOCK_CHEST_LOCKED, 1.0f, 1.0f)
             return true
         }
         if (StorageLimit.getLimit(player) < number) {
             sender.sendMessage("입력하신 숫자가 보유중인 창고의 수보다 큽니다")
+            player.playSound(player.location, Sound.BLOCK_CHEST_LOCKED, 1.0f, 1.0f)
             return true
         }
 
@@ -82,7 +85,9 @@ class OpenCommand : CommandExecutor, TabCompleter {
         val items = Save.load(player.uniqueId.toString(), number)
         val gui: Inventory = Bukkit.createInventory(null, 54, "${number}번 창고")
         items.forEach(gui::setItem)
+        player.closeInventory()
         player.openInventory(gui)
+        player.playSound(player.location, Sound.BLOCK_ENDER_CHEST_OPEN, 1.0f, 1.0f)
         InventoryCloseListener.openPlayerList.add(player)
 
         return true
