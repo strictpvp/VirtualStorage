@@ -65,7 +65,14 @@ class OpenCommand : CommandExecutor, TabCompleter {
             return true
         }
 
-        var number = args[0]?.toInt()
+        var number: Int? = -1
+
+        try {
+            number = args[0]?.toInt()
+        } catch (e: Exception) {
+            // ignore
+        }
+
 
         if (number == null || number < 1) {
             sender.sendMessage("올바른 자연수를 입력해주세요")
