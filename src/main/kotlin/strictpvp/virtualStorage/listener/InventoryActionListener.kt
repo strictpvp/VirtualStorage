@@ -37,7 +37,7 @@ class InventoryActionListener : Listener {
                 
                 val key = NamespacedKey(plugin, "number")
                 if (!meta!!.persistentDataContainer.has(key, PersistentDataType.INTEGER)) {
-                    event.whoClicked.sendMessage("죄송합니다 오류가 발생했습니다. /창고 <number> 를 이용해주세요")
+                    //event.whoClicked.sendMessage("죄송합니다 오류가 발생했습니다. /창고 <number> 를 이용해주세요")
                     return
                 }
                 val number = meta.persistentDataContainer.get(key, PersistentDataType.INTEGER)!!
