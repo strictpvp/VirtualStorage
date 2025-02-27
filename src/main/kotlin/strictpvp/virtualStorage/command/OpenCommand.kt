@@ -84,15 +84,11 @@ class OpenCommand : CommandExecutor, TabCompleter {
             player.playSound(player.location, Sound.BLOCK_CHEST_LOCKED, 1.0f, 1.0f)
             return true
         }
-
-        if (InventoryCloseListener.openPlayerList.contains(player)) {
-            player.closeInventory()
-        }
+        player.closeInventory()
 
         val items = Save.load(player.uniqueId.toString(), number)
         val gui: Inventory = Bukkit.createInventory(null, 54, "${number}번 창고")
         items.forEach(gui::setItem)
-        player.closeInventory()
         player.openInventory(gui)
         player.playSound(player.location, Sound.BLOCK_ENDER_CHEST_OPEN, 1.0f, 1.0f)
         InventoryCloseListener.openPlayerList.add(player)
