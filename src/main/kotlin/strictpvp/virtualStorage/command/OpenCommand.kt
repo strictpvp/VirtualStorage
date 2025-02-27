@@ -35,26 +35,26 @@ class OpenCommand : CommandExecutor, TabCompleter {
 
         if (args.isEmpty()) {
             val items = mutableMapOf<Int, ItemStack>()
-            val gui: Inventory = Bukkit.createInventory(null, 36, "가상창고")
+            val gui: Inventory = Bukkit.createInventory(null, 36, "창고")
 
-            for (slot in 1..36) {
-                if (slot > StorageLimit.getLimit(sender)) {
+            for (slot in 0..35) {
+                if (slot + 1 > StorageLimit.getLimit(sender)) {
                     break
                 }
 
                 val stack = ItemStack(Material.CHEST)
                 val meta = stack.itemMeta
 
-                meta!!.setDisplayName("가상창고 $slot")
+                meta!!.setDisplayName("${ChatColor.RESET}${ChatColor.WHITE}${slot + 1}번 창고")
                 meta.lore = listOf<String>(
                     "${ChatColor.WHITE}클릭시 해당 창고로 이동 합니다."
                 )
                 val key = NamespacedKey(plugin, "number")
-                meta.persistentDataContainer.set(key, PersistentDataType.INTEGER, slot)
+                meta.persistentDataContainer.set(key, PersistentDataType.INTEGER, slot + 1)
 
                 stack.itemMeta = meta
 
-                items.put(slot - 1, stack)
+                items.put(slot, stack)
             }
 
             items.forEach(gui::setItem)
@@ -80,7 +80,7 @@ class OpenCommand : CommandExecutor, TabCompleter {
         }
 
         val items = Save.load(player.uniqueId.toString(), number)
-        val gui: Inventory = Bukkit.createInventory(null, 54, "가상창고 $number")
+        val gui: Inventory = Bukkit.createInventory(null, 54, "${number}번 창고")
         items.forEach(gui::setItem)
         player.openInventory(gui)
         InventoryCloseListener.openPlayerList.add(player)

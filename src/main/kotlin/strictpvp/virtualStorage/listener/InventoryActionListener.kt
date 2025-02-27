@@ -42,6 +42,7 @@ class InventoryActionListener : Listener {
                 }
                 val number = meta.persistentDataContainer.get(key, PersistentDataType.INTEGER)!!
 
+                openPlayers.remove(event.whoClicked as Player)
                 Bukkit.dispatchCommand(event.whoClicked as CommandSender, "창고 $number")
             }
 
@@ -51,7 +52,6 @@ class InventoryActionListener : Listener {
 
     @EventHandler
     fun closeHandler(event: InventoryCloseEvent) {
-        val player = event.player as Player
-        openPlayers.remove(player)
+        openPlayers.remove(event.player)
     }
 }

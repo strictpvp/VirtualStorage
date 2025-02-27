@@ -14,8 +14,8 @@ class InventoryCloseListener : Listener {
 
     @EventHandler
     fun onClose(event: InventoryCloseEvent) {
-        if (openPlayerList.contains(event.player))
-            openPlayerList.remove(event.player)
+        if (!openPlayerList.contains(event.player))
+            return
 
         val list: MutableMap<Int, ItemStack> = mutableMapOf()
 
@@ -28,10 +28,14 @@ class InventoryCloseListener : Listener {
 
         val title = event.view.title
 
-        val regex = Regex("가상창고 (\\d+)")
+        if (!title.contains("번 창고"))
+            return
+
+        val regex = Regex("(\\d+)번 창고")
         val matchResult = regex.find(title)
         val number = matchResult?.groups?.get(1)?.value?.toIntOrNull() ?: -1
 
+        openPlayerList.remove(event.player)
         Save.save(event.player.uniqueId.toString(), number, list)
     }
 }
